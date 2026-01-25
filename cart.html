@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Cart | AR TECHNOLOGY</title>
+
+<style>
+:root{
+  --bg-primary:#1E2A33;
+  --bg-secondary:#24323D;
+  --cyan-primary:#35E6E1;
+  --cyan-secondary:#6FF3EE;
+  --text-white:#FFFFFF;
+  --text-muted:#B6C2CC;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:"Segoe UI", Arial, sans-serif;
+}
+
+body{
+  background:var(--bg-primary);
+  color:var(--text-white);
+}
+
+/* NAV */
+nav{
+  background:var(--bg-secondary);
+  padding:16px 24px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logo{
+  color:var(--cyan-primary);
+  font-size:1.4rem;
+  font-weight:800;
+  letter-spacing:3px;
+}
+
+nav a{
+  color:var(--text-white);
+  text-decoration:none;
+  margin-left:18px;
+  font-size:0.9rem;
+}
+
+nav a:hover{
+  color:var(--cyan-primary);
+}
+
+/* CART */
+.container{
+  max-width:900px;
+  margin:auto;
+  padding:40px 20px;
+}
+
+h1{
+  margin-bottom:24px;
+  color:var(--cyan-primary);
+}
+
+.cart-box{
+  background:var(--bg-secondary);
+  border-radius:16px;
+  padding:20px;
+}
+
+.cart-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:1px solid rgba(182,194,204,0.15);
+  padding:14px 0;
+}
+
+.cart-item:last-child{
+  border-bottom:none;
+}
+
+.cart-item span{
+  font-weight:500;
+}
+
+.qty{
+  color:var(--text-muted);
+  font-size:0.85rem;
+}
+
+.remove-btn{
+  background:none;
+  border:none;
+  color:#ff6b6b;
+  font-size:0.9rem;
+  cursor:pointer;
+}
+
+/* TOTAL */
+.total{
+  margin-top:20px;
+  text-align:right;
+  font-size:0.95rem;
+  line-height:1.6;
+}
+
+.total strong{
+  font-size:1.3rem;
+  color:var(--cyan-secondary);
+}
+
+/* FORM */
+form{
+  margin-top:30px;
+  background:var(--bg-secondary);
+  padding:20px;
+  border-radius:16px;
+}
+
+form h2{
+  color:var(--cyan-primary);
+  margin-bottom:15px;
+}
+
+input, textarea{
+  width:100%;
+  padding:12px;
+  margin-bottom:14px;
+  border-radius:10px;
+  border:none;
+  background:var(--bg-primary);
+  color:var(--text-white);
+}
+
+input::placeholder,
+textarea::placeholder{
+  color:var(--text-muted);
+}
+
+button{
+  width:100%;
+  background:var(--cyan-primary);
+  color:var(--bg-primary);
+  padding:14px;
+  border:none;
+  border-radius:12px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+button:hover{
+  background:var(--cyan-secondary);
+}
+
+/* FOOTER */
+footer{
+  margin-top:60px;
+  background:var(--bg-secondary);
+  color:var(--text-muted);
+  padding:30px 20px;
+  text-align:center;
+  font-size:0.85rem;
+}
+
+footer a{
+  color:var(--text-muted);
+  margin:0 10px;
+  text-decoration:none;
+}
+
+footer a:hover{
+  color:var(--cyan-primary);
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+  <div class="logo">AR TECHNOLOGY</div>
+  <div>
+    <a href="index.html">Home</a>
+  </div>
+</nav>
+
+<div class="container">
+  <h1>Your Cart</h1>
+
+  <div class="cart-box" id="cartBox"></div>
+
+  <form id="orderForm" style="display:none;">
+    <h2>Customer Details</h2>
+
+    <input type="text" id="name" placeholder="Full Name" required>
+    <input type="tel" id="phone" placeholder="Phone Number" required>
+    <input type="email" id="email" placeholder="Email Address (Gmail)" required>
+    <textarea id="address" placeholder="Full Address with Pincode" rows="3" required></textarea>
+
+    <button type="submit">Place Order via WhatsApp</button>
+  </form>
+</div>
+
+<footer>
+  <div>
+    <a href="about.html">About</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms</a>
+    <a href="refund.html">Refund</a>
+    <a href="shipping.html">Shipping</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <p>AR TECHNOLOGY © 2026 • Designed by ECHOX</p>
+</footer>
+
+<script>
+const SHIPPING_COST = 99;
+const WHATSAPP_NUMBER = "918762677569";
+
+const cartBox = document.getElementById("cartBox");
+const form = document.getElementById("orderForm");
+
+function getCart(){
+  return JSON.parse(localStorage.getItem("cartItems")) || [];
+}
+
+function saveCart(cart){
+  localStorage.setItem("cartItems", JSON.stringify(cart));
+}
+
+function renderCart(){
+  const cart = getCart();
+  cartBox.innerHTML = "";
+
+  let productCost = 0;
+  let totalQty = 0;
+
+  if(cart.length === 0){
+    cartBox.innerHTML = "<p>Your cart is empty.</p>";
+    form.style.display = "none";
+    return;
+  }
+
+  form.style.display = "block";
+
+  cart.forEach((item, index)=>{
+    const qty = item.quantity || 1;
+    totalQty += qty;
+    const itemTotal = item.price * qty;
+    productCost += itemTotal;
+
+    const div = document.createElement("div");
+    div.className = "cart-item";
+    div.innerHTML = `
+      <span>
+        ${item.name} – ₹${item.price}
+        <div class="qty">Qty: ${qty}</div>
+      </span>
+      <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
+    `;
+    cartBox.appendChild(div);
+  });
+
+  const packRate = totalQty > 10 ? 10 : 15;
+  const packagingCost = packRate * totalQty;
+  const grandTotal = productCost + packagingCost + SHIPPING_COST;
+
+  const summary = document.createElement("div");
+  summary.className = "total";
+  summary.innerHTML = `
+    <div>Product Cost: ₹${productCost}</div>
+    <div>Packaging (${packRate} × ${totalQty}): ₹${packagingCost}</div>
+    <div>Shipping: ₹${SHIPPING_COST}</div>
+    <strong>Grand Total: ₹${grandTotal}</strong>
+  `;
+  cartBox.appendChild(summary);
+}
+
+function removeItem(index){
+  const cart = getCart();
+  cart.splice(index, 1);
+  saveCart(cart);
+  renderCart();
+}
+
+document.getElementById("orderForm").addEventListener("submit", function(e){
+  e.preventDefault();
+
+  const cart = getCart();
+  let productCost = 0;
+  let totalQty = 0;
+  const orderId = "ART-" + Date.now();
+
+  let msg = `🛒 *AR TECHNOLOGY – NEW ORDER*\n\n`;
+  msg += `Order ID: ${orderId}\n\n📦 *Order Items*\n`;
+
+  cart.forEach(item=>{
+    const qty = item.quantity || 1;
+    totalQty += qty;
+    const itemTotal = item.price * qty;
+    productCost += itemTotal;
+    msg += `• ${item.name} × ${qty} = ₹${itemTotal}\n`;
+  });
+
+  const packRate = totalQty > 10 ? 10 : 15;
+  const packaging = packRate * totalQty;
+  const total = productCost + packaging + SHIPPING_COST;
+
+  msg += `\n🧾 *Charges*\n`;
+  msg += `Product Cost: ₹${productCost}\n`;
+  msg += `Packaging: ₹${packaging}\n`;
+  msg += `Shipping: ₹${SHIPPING_COST}\n`;
+  msg += `----------------------\n`;
+  msg += `💰 *Grand Total: ₹${total}*\n\n`;
+
+  msg += `👤 *Customer Details*\n`;
+  msg += `Name: ${name.value}\n`;
+  msg += `Phone: ${phone.value}\n`;
+  msg += `Email: ${email.value}\n`;
+  msg += `Address: ${address.value}\n\n`;
+  msg += `Please share payment details (UPI / QR).`;
+
+  window.open(
+    `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`,
+    "_blank"
+  );
+});
+
+renderCart();
+</script>
+
+</body>
+</html>

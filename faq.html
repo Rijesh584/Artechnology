@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - Frequently Asked Questions | AR Technology</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #1E2A33 0%, #24323D 100%);
+            color: #FFFFFF;
+            min-height: 100vh;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Header Section */
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #35E6E1;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: #FFFFFF;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #B6C2CC;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Decorative Line */
+        .title-underline {
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #35E6E1, #6FF3EE);
+            margin: 1.5rem auto;
+            border-radius: 2px;
+        }
+
+        /* FAQ Container */
+        .faq-container {
+            margin-top: 3rem;
+        }
+
+        /* FAQ Item */
+        .faq-item {
+            background: rgba(36, 50, 61, 0.6);
+            border: 1px solid rgba(53, 230, 225, 0.2);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            border-color: rgba(53, 230, 225, 0.5);
+            box-shadow: 0 4px 20px rgba(53, 230, 225, 0.1);
+        }
+
+        .faq-item.active {
+            border-color: #35E6E1;
+            box-shadow: 0 4px 30px rgba(53, 230, 225, 0.2);
+        }
+
+        /* FAQ Question */
+        .faq-question {
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: rgba(53, 230, 225, 0.05);
+        }
+
+        .faq-item.active .faq-question {
+            background: rgba(53, 230, 225, 0.1);
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #FFFFFF;
+            padding-right: 1rem;
+        }
+
+        /* Icon */
+        .faq-icon {
+            width: 24px;
+            height: 24px;
+            min-width: 24px;
+            border: 2px solid #35E6E1;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .faq-icon::before,
+        .faq-icon::after {
+            content: '';
+            position: absolute;
+            background: #35E6E1;
+            transition: all 0.3s ease;
+        }
+
+        .faq-icon::before {
+            width: 10px;
+            height: 2px;
+        }
+
+        .faq-icon::after {
+            width: 2px;
+            height: 10px;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+            background: #35E6E1;
+        }
+
+        .faq-item.active .faq-icon::before,
+        .faq-item.active .faq-icon::after {
+            background: #1E2A33;
+        }
+
+        /* FAQ Answer */
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 1000px;
+        }
+
+        .answer-content {
+            padding: 0 1.5rem 1.5rem 1.5rem;
+            color: #B6C2CC;
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        .answer-content p {
+            margin-bottom: 0.8rem;
+        }
+
+        .answer-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        .answer-content ul {
+            margin: 0.8rem 0 0.8rem 1.5rem;
+        }
+
+        .answer-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .answer-content strong {
+            color: #6FF3EE;
+        }
+
+        .answer-content a {
+            color: #35E6E1;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .answer-content a:hover {
+            color: #6FF3EE;
+            text-decoration: underline;
+        }
+
+        /* Contact Section */
+        .contact-cta {
+            background: rgba(53, 230, 225, 0.1);
+            border: 2px solid #35E6E1;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .contact-cta h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.8rem;
+            color: #FFFFFF;
+        }
+
+        .contact-cta p {
+            color: #B6C2CC;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+
+        .contact-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #35E6E1;
+            color: #1E2A33;
+        }
+
+        .btn-primary:hover {
+            background: #6FF3EE;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(53, 230, 225, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #35E6E1;
+            border: 2px solid #35E6E1;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(53, 230, 225, 0.1);
+            border-color: #6FF3EE;
+            color: #6FF3EE;
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(53, 230, 225, 0.2);
+            color: #B6C2CC;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 30px 15px;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            .faq-question {
+                padding: 1.2rem;
+            }
+
+            .question-text {
+                font-size: 1rem;
+            }
+
+            .answer-content {
+                padding: 0 1.2rem 1.2rem 1.2rem;
+                font-size: 0.95rem;
+            }
+
+            .contact-cta {
+                padding: 1.5rem;
+            }
+
+            .contact-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.4rem;
+            }
+
+            .page-title {
+                font-size: 1.7rem;
+            }
+
+            .contact-cta h3 {
+                font-size: 1.3rem;
+            }
+        }
+
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="logo">AR TECHNOLOGY</div>
+            <h1 class="page-title">Frequently Asked Questions</h1>
+            <div class="title-underline"></div>
+            <p class="subtitle">Find answers to common questions about our products, ordering process, and services.</p>
+        </header>
+
+        <!-- FAQ Items -->
+        <div class="faq-container">
+            <!-- FAQ 1 -->
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span class="question-text">What does AR Technology sell?</span>
+                    <div class="faq-icon"></div>
+                </div>
+                <div class="faq-answer">
+                    <div class="answer-content">
+                        <p>AR Technology specializes in electronic components for students, hobbyists, and DIY makers. Our product range includes:</p>
+                        <ul>
+                            <li><strong>Development Boards:</strong> Arduino, ESP32, ESP8266, Raspberry Pi</li>
+                            <li><strong>Sensors:</strong> Temperature, motion, ultrasonic, gas, and more</li>
+                            <li><strong>Communication Modules:</strong> Bluetooth (HC-05, BLE), Wi-Fi modules</li>
+                            <li><strong>Displays:</strong> OLED, LCD, TFT, LED matrices</li>
+                            <li><strong>Power Supplies:</strong> Adapters, batteries, voltage regulators</li>
+                            <li><strong>Accessories:</strong> Jumper wires, breadboards, resistors, capacitors</li>
+                        </ul>
+                        <p>We're constantly updating our inventory to meet the needs of makers and tech enthusiasts!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ 2 -->
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span class="question-text">How can I place an order?</span>
+                    <div class="faq-icon"></div>
+                </div>
+                <div class="faq-answer">
+                    <div class="answer-content">
+                        <p>Placing an order with AR Technology is simple and convenient! We accept orders through two primary channels:</p>
+                        <p><strong>WhatsApp:</strong> Send us a message at <a href="https://wa.me/918762677569" target="_blank">+91 87626 77569</a> with your product list and delivery address. Our team will respond quickly with pricing and availability.</p>
+                        <p><strong>Instagram DM:</strong> Visit our Instagram page and send us a direct message with your requirements. We'll get back to you promptly!</p>
+                        <p>Simply share the components you need, quantity, and your location, and we'll take care of the rest. Payment details and delivery timeline will be confirmed before dispatch.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ 3 -->
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span class="question-text">Do you provide Cash on Delivery (COD)?</span>
+                    <div class="faq-icon"></div>
+                </div>
+                <div class="faq-answer">
+                    <div class="answer-content">
+                        <p>Yes! We offer <strong>Cash on Delivery (COD)</strong> for orders within select serviceable areas. COD availability depends on your location and order value.</p>
+                        <p>When placing your order via WhatsApp or Instagram, please mention if you prefer COD payment. Our team will confirm if COD is available for your delivery address.</p>
+                        <p>We also accept online payment methods including UPI, bank transfer, and digital wallets for a seamless ordering experience.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ 4 -->
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span class="question-text">Do you provide project guidance or technical support?</span>
+                    <div class="faq-icon"></div>
+                </div>
+                <div class="faq-answer">
+                    <div class="answer-content">
+                        <p>Absolutely! We're passionate about helping students and makers bring their projects to life.</p>
+                        <p><strong>What we offer:</strong></p>
+                        <ul>
+                            <li>Component recommendations based on your project requirements</li>
+                            <li>Basic troubleshooting and technical assistance</li>
+                            <li>Guidance on selecting the right modules and sensors</li>
+                            <li>Helpful resources and documentation links</li>
+                        </ul>
+                        <p>While we can't design entire projects, we're always happy to answer questions and point you in the right direction. Feel free to reach out via WhatsApp or Instagram with your technical queries!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ 5 -->
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span class="question-text">How long does delivery take?</span>
+                    <div class="faq-icon"></div>
+                </div>
+                <div class="faq-answer">
+                    <div class="answer-content">
+                        <p>Delivery timelines vary based on your location and product availability:</p>
+                        <p><strong>Local Delivery:</strong> 1-2 business days for nearby areas</p>
+                        <p><strong>Domestic Delivery:</strong> 3-7 business days for most locations across India</p>
+                        <p><strong>Express Delivery:</strong> Available for urgent orders (additional charges may apply)</p>
+                        <p>Once your order is confirmed and payment is received, we'll provide you with tracking details so you can monitor your shipment. Orders are typically dispatched within 24 hours of confirmation.</p>
+                        <p>For bulk orders or specific delivery requirements, please contact us directly for a custom timeline.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ 6 -->
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span class="question-text">What is your return and refund policy?</span>
+                    <div class="faq-icon"></div>
+                </div>
+                <div class="faq-answer">
+                    <div class="answer-content">
+                        <p>We want you to be completely satisfied with your purchase. Here's our return and refund policy:</p>
+                        <p><strong>Defective Products:</strong> If you receive a defective or damaged item, please contact us within 48 hours of delivery with photos/videos. We'll arrange a replacement or full refund.</p>
+                        <p><strong>Wrong Items:</strong> If you receive the wrong product, notify us immediately. We'll arrange for the correct item to be sent at no additional cost.</p>
+                        <p><strong>Return Window:</strong> Returns must be initiated within 7 days of delivery for eligible items. Products must be unused and in original packaging.</p>
+                        <p><strong>Non-Returnable Items:</strong> Due to hygiene and quality reasons, certain items like sensors and programmed boards may not be eligible for return unless defective.</p>
+                        <p>For any issues, reach out via WhatsApp or Instagram, and our team will resolve it quickly!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ 7 -->
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span class="question-text">Do you offer student or bulk discounts?</span>
+                    <div class="faq-icon"></div>
+                </div>
+                <div class="faq-answer">
+                    <div class="answer-content">
+                        <p>Yes! We understand the importance of supporting students and educational projects.</p>
+                        <p><strong>Student Discounts:</strong> Students working on academic projects may be eligible for special pricing on select items. Please provide your college ID or project details when placing an order.</p>
+                        <p><strong>Bulk Orders:</strong> Planning a workshop, competition, or large-scale project? We offer attractive discounts on bulk purchases. The more you buy, the more you save!</p>
+                        <p><strong>Educational Institutions:</strong> We provide special pricing packages for schools, colleges, and training centers. Contact us to discuss your requirements.</p>
+                        <p>To inquire about discounts, simply mention your needs when reaching out via WhatsApp or Instagram. We'll be happy to work out the best deal for you!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ 8 -->
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span class="question-text">Are your products genuine and tested?</span>
+                    <div class="faq-icon"></div>
+                </div>
+                <div class="faq-answer">
+                    <div class="answer-content">
+                        <p>Quality is our top priority! All products sold by AR Technology are sourced from trusted suppliers and undergo quality checks before dispatch.</p>
+                        <p><strong>Quality Assurance:</strong></p>
+                        <ul>
+                            <li>Genuine components from reliable manufacturers</li>
+                            <li>Visual inspection and basic functionality testing</li>
+                            <li>Proper packaging to prevent damage during transit</li>
+                            <li>Warranty coverage on applicable products</li>
+                        </ul>
+                        <p>We stand behind the quality of our products. If you encounter any issues, our support team is always ready to assist you!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact CTA -->
+        <div class="contact-cta">
+            <h3>Still Have Questions?</h3>
+            <p>Can't find what you're looking for? Our team is here to help! Reach out to us directly.</p>
+            <div class="contact-buttons">
+                <a href="https://wa.me/918762677569" class="btn btn-primary" target="_blank">
+                    <span>💬 WhatsApp Us</span>
+                </a>
+                <a href="https://instagram.com" class="btn btn-secondary" target="_blank">
+                    <span>📱 Instagram DM</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2025 AR Technology. All rights reserved.</p>
+            <p>Empowering makers, students, and innovators with quality electronics.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Get all FAQ items
+        const faqItems = document.querySelectorAll('.faq-item');
+
+        // Add click event listener to each FAQ question
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            
+            question.addEventListener('click', () => {
+                // Toggle active class on clicked item
+                const isActive = item.classList.contains('active');
+                
+                // Optional: Close other FAQs when opening a new one
+                // Uncomment the lines below if you want accordion behavior (only one FAQ open at a time)
+                /*
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove('active');
+                    }
+                });
+                */
+                
+                // Toggle current item
+                if (isActive) {
+                    item.classList.remove('active');
+                } else {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Optional: Add keyboard navigation
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            
+            question.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    question.click();
+                }
+            });
+            
+            // Make focusable
+            question.setAttribute('tabindex', '0');
+        });
+    </script>
+</body>
+</html>

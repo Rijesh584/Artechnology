@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IR Obstacle Sensor – AR Technology</title>
+
+<style>
+:root{
+  --primary:#35E6E1;
+  --accent:#6FF3EE;
+  --bg:#1E2A33;
+  --card:#24323D;
+  --white:#FFFFFF;
+  --muted:#B6C2CC;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+
+body{
+  background:var(--bg);
+  color:var(--white);
+}
+
+/* HEADER */
+header{
+  background:var(--card);
+  padding:16px;
+  position:sticky;
+  top:0;
+}
+
+nav{
+  max-width:1200px;
+  margin:auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logo{
+  color:var(--primary);
+  font-size:1.5rem;
+  font-weight:700;
+}
+
+nav ul{
+  list-style:none;
+  display:flex;
+  gap:16px;
+  align-items:center;
+}
+
+nav a{
+  color:white;
+  text-decoration:none;
+}
+
+.cart-count{
+  background:var(--primary);
+  color:#000;
+  border-radius:50%;
+  padding:2px 8px;
+  font-size:0.8rem;
+  margin-left:4px;
+}
+
+/* MAIN */
+main{
+  max-width:1200px;
+  margin:40px auto;
+  padding:0 16px;
+}
+
+.product{
+  display:flex;
+  gap:30px;
+  flex-wrap:wrap;
+}
+
+.product img{
+  max-width:420px;
+  width:100%;
+  border-radius:10px;
+}
+
+.details{
+  flex:1;
+}
+
+.details h1{
+  color:var(--primary);
+  margin-bottom:10px;
+}
+
+.price{
+  font-size:1.4rem;
+  margin-bottom:10px;
+}
+
+.desc{
+  color:var(--muted);
+  margin-bottom:20px;
+}
+
+h3{
+  color:var(--primary);
+  margin:20px 0 10px;
+}
+
+ul{
+  margin-left:18px;
+  color:var(--muted);
+}
+
+/* QTY */
+.qty-box{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin:20px 0;
+}
+
+.qty-btn{
+  width:40px;
+  height:40px;
+  background:var(--primary);
+  border:none;
+  font-size:1.2rem;
+  cursor:pointer;
+}
+
+.add-btn{
+  background:var(--primary);
+  border:none;
+  padding:12px 30px;
+  font-weight:700;
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<nav>
+  <div class="logo">AR TECHNOLOGY</div>
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li>
+      <a href="cart.html">Cart
+        <span class="cart-count" id="cartCount">0</span>
+      </a>
+    </li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+</header>
+
+<main>
+<div class="product">
+
+  <img src="ir-obstacle.png" alt="IR Obstacle Sensor">
+
+  <div class="details">
+    <h1>IR Obstacle Sensor Module</h1>
+    <div class="price">₹79</div>
+
+    <p class="desc">
+      IR Obstacle Sensor is used for detecting obstacles using infrared reflection.
+      It is widely used in line-following robots and obstacle avoidance systems.
+    </p>
+
+    <h3>Specifications</h3>
+    <ul>
+      <li>Operating Voltage: 3.3V – 5V</li>
+      <li>Detection Range: 2cm – 30cm</li>
+      <li>Output: Digital</li>
+      <li>Adjustable Sensitivity</li>
+    </ul>
+
+    <h3>Applications</h3>
+    <ul>
+      <li>Obstacle Avoiding Robots</li>
+      <li>Line Following Robots</li>
+      <li>Automation Projects</li>
+      <li>DIY Robotics</li>
+    </ul>
+
+    <div class="qty-box">
+      <button class="qty-btn" onclick="dec()">−</button>
+      <span id="qty">1</span>
+      <button class="qty-btn" onclick="inc()">+</button>
+    </div>
+
+    <button class="add-btn" onclick="addToCart()">Add to Cart</button>
+  </div>
+
+</div>
+</main>
+
+<script>
+let qty = 1;
+const price = 79;
+
+function inc(){
+  qty++;
+  document.getElementById("qty").innerText = qty;
+}
+
+function dec(){
+  if(qty>1){qty--;}
+  document.getElementById("qty").innerText = qty;
+}
+
+function addToCart(){
+  let cart = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+  const product = {
+    id:"ir-obstacle",
+    name:"IR Obstacle Sensor Module",
+    price:price,
+    quantity:qty,
+    image:"ir-obstacle.png"
+  };
+
+  const index = cart.findIndex(p=>p.id===product.id);
+
+  if(index>-1){
+    cart[index].quantity += qty;
+  }else{
+    cart.push(product);
+  }
+
+  localStorage.setItem("cartItems",JSON.stringify(cart));
+  updateCartCount();
+}
+
+function updateCartCount(){
+  let cart = JSON.parse(localStorage.getItem("cartItems")) || [];
+  let count = cart.reduce((s,i)=>s+i.quantity,0);
+  document.getElementById("cartCount").innerText = count;
+}
+
+updateCartCount();
+</script>
+
+</body>
+</html>
