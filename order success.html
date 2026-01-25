@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Request Sent Successfully | AR Technology</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #1E2A33 0%, #24323D 100%);
+            color: #FFFFFF;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Logo */
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #35E6E1;
+            margin-bottom: 2rem;
+            letter-spacing: 2px;
+            animation: fadeInDown 0.6s ease;
+        }
+
+        /* Success Icon */
+        .success-icon-wrapper {
+            margin: 0 auto 2rem;
+            width: 120px;
+            height: 120px;
+            position: relative;
+            animation: scaleIn 0.6s ease 0.2s backwards;
+        }
+
+        .success-circle {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: rgba(53, 230, 225, 0.1);
+            border: 3px solid #35E6E1;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .success-circle::before {
+            content: '';
+            position: absolute;
+            width: 90%;
+            height: 90%;
+            border-radius: 50%;
+            background: rgba(53, 230, 225, 0.05);
+            border: 2px solid rgba(53, 230, 225, 0.3);
+        }
+
+        .checkmark {
+            width: 50px;
+            height: 50px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .checkmark-stem {
+            position: absolute;
+            width: 6px;
+            height: 30px;
+            background: #35E6E1;
+            left: 26px;
+            top: 10px;
+            border-radius: 3px;
+            transform-origin: bottom;
+            animation: checkmarkStem 0.4s ease 0.4s backwards;
+        }
+
+        .checkmark-kick {
+            position: absolute;
+            width: 18px;
+            height: 6px;
+            background: #35E6E1;
+            left: 10px;
+            top: 34px;
+            border-radius: 3px;
+            transform-origin: left;
+            animation: checkmarkKick 0.3s ease 0.6s backwards;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(53, 230, 225, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 0 20px rgba(53, 230, 225, 0);
+            }
+        }
+
+        @keyframes checkmarkStem {
+            from {
+                height: 0;
+            }
+            to {
+                height: 30px;
+            }
+        }
+
+        @keyframes checkmarkKick {
+            from {
+                width: 0;
+            }
+            to {
+                width: 18px;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Content */
+        .content {
+            animation: fadeInUp 0.6s ease 0.4s backwards;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: #FFFFFF;
+        }
+
+        .success-message {
+            font-size: 1.1rem;
+            color: #B6C2CC;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        /* Info Card */
+        .info-card {
+            background: rgba(53, 230, 225, 0.1);
+            border: 1px solid rgba(53, 230, 225, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.6s ease 0.6s backwards;
+        }
+
+        .info-card p {
+            color: #B6C2CC;
+            font-size: 0.95rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .info-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-card strong {
+            color: #6FF3EE;
+            font-weight: 600;
+        }
+
+        .contact-number {
+            color: #35E6E1;
+            font-weight: 700;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-number:hover {
+            color: #6FF3EE;
+        }
+
+        /* Reminder Note */
+        .reminder-note {
+            background: rgba(36, 50, 61, 0.6);
+            border-left: 4px solid #35E6E1;
+            border-radius: 8px;
+            padding: 1.2rem;
+            margin-bottom: 2rem;
+            text-align: left;
+            animation: fadeInUp 0.6s ease 0.8s backwards;
+        }
+
+        .reminder-note-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            color: #35E6E1;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .reminder-icon {
+            width: 18px;
+            height: 18px;
+            border: 2px solid #35E6E1;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 900;
+        }
+
+        .reminder-note p {
+            color: #B6C2CC;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.6s ease 1s backwards;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-primary {
+            background: #35E6E1;
+            color: #1E2A33;
+        }
+
+        .btn-primary:hover {
+            background: #6FF3EE;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(53, 230, 225, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #35E6E1;
+            border: 2px solid #35E6E1;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(53, 230, 225, 0.1);
+            border-color: #6FF3EE;
+            color: #6FF3EE;
+            transform: translateY(-2px);
+        }
+
+        /* Order ID (Optional) */
+        .order-reference {
+            margin-top: 2rem;
+            font-size: 0.85rem;
+            color: #B6C2CC;
+            animation: fadeInUp 0.6s ease 1.2s backwards;
+        }
+
+        .order-reference span {
+            color: #6FF3EE;
+            font-weight: 600;
+        }
+
+        /* Decorative Elements */
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #35E6E1;
+            border-radius: 50%;
+            animation: sparkle 2s ease-in-out infinite;
+        }
+
+        .sparkle-1 {
+            top: 10%;
+            left: 15%;
+            animation-delay: 0s;
+        }
+
+        .sparkle-2 {
+            top: 20%;
+            right: 20%;
+            animation-delay: 0.5s;
+        }
+
+        .sparkle-3 {
+            bottom: 25%;
+            left: 10%;
+            animation-delay: 1s;
+        }
+
+        .sparkle-4 {
+            bottom: 15%;
+            right: 15%;
+            animation-delay: 1.5s;
+        }
+
+        @keyframes sparkle {
+            0%, 100% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 1.3rem;
+            }
+
+            h1 {
+                font-size: 1.7rem;
+            }
+
+            .success-message {
+                font-size: 1rem;
+            }
+
+            .success-icon-wrapper {
+                width: 100px;
+                height: 100px;
+            }
+
+            .info-card {
+                padding: 1.2rem;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .success-icon-wrapper {
+                width: 90px;
+                height: 90px;
+            }
+
+            .checkmark-stem {
+                height: 25px;
+                width: 5px;
+                left: 22px;
+            }
+
+            .checkmark-kick {
+                width: 15px;
+                height: 5px;
+                left: 9px;
+                top: 29px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Decorative Sparkles -->
+    <div class="sparkle sparkle-1"></div>
+    <div class="sparkle sparkle-2"></div>
+    <div class="sparkle sparkle-3"></div>
+    <div class="sparkle sparkle-4"></div>
+
+    <div class="container">
+        <!-- Logo -->
+        <div class="logo">AR TECHNOLOGY</div>
+
+        <!-- Success Icon -->
+        <div class="success-icon-wrapper">
+            <div class="success-circle">
+                <div class="checkmark">
+                    <div class="checkmark-stem"></div>
+                    <div class="checkmark-kick"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <h1>Order Request Sent Successfully!</h1>
+            <p class="success-message">
+                Thank you for choosing AR Technology! Your order request has been sent and our team will review it shortly.
+            </p>
+
+            <!-- Info Card -->
+            <div class="info-card">
+                <p><strong>What happens next?</strong></p>
+                <p>Our team will contact you via WhatsApp or Instagram within a few hours to confirm your order details, provide pricing, and arrange payment & delivery.</p>
+                <p>You can reach us directly at <a 
+  href="https://api.whatsapp.com/send?phone=918762677569&text=Hello%20AR%20Technology,%20I%20have%20a%20query%20about%20my%20order."
+  class="contact-number"
+  target="_blank"
+>
+  +91 87626 77569
+</a></p>
+            </div>
+
+            <!-- Reminder Note -->
+            <div class="reminder-note">
+                <div class="reminder-note-title">
+                    <span class="reminder-icon">!</span>
+                    <span>Quick Reminder</span>
+                </div>
+                <p>Please keep your WhatsApp or Instagram active and check for messages from AR Technology. This helps us confirm your order faster and get your components to you quickly!</p>
+            </div>
+
+            <!-- Buttons -->
+            <div class="button-group">
+                <a href="index.html" class="btn btn-primary">
+                    <span>← Back to Home</span>
+                </a>
+                <a href="products.html" class="btn btn-secondary">
+                    <span>View More Products</span>
+                </a>
+            </div>
+
+            <!-- Order Reference (Optional) -->
+            <div class="order-reference">
+                <p>Order requested at: <span id="orderTime"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Display current date and time
+        function displayOrderTime() {
+            const now = new Date();
+            const options = { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric', 
+                hour: '2-digit', 
+                minute: '2-digit',
+                hour12: true
+            };
+            const formattedTime = now.toLocaleString('en-IN', options);
+            document.getElementById('orderTime').textContent = formattedTime;
+        }
+
+        // Run on page load
+        displayOrderTime();
+
+        // Optional: Add confetti-like animation on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add any additional interactive features here
+            console.log('Order success page loaded');
+        });
+    </script>
+</body>
+</html>
